@@ -38,9 +38,13 @@ Adicionalmente, o script integra a captura de pacotes via Wireshark (utilizando 
 1. Clone este repositório:
    ```bash
    git clone https://github.com/Ghost-of-Maverick/PSI-Script/
-2. Mudar permissões do script:
+2.  Entrar na pasta e mover o script para `BASE_PATH`
+    ```bash
+    cd PSI-Script/
+    mv psi_menu_runner.sh /home/PSI-master
+3. Mudar permissões do script:
     ```bash
     chmod +x psi_menu_runner.sh
-3. Executar o script:
+4. Executar o script:
    ```bash
    sudo ./psi_menu_runner.sh
