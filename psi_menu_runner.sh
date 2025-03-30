@@ -108,8 +108,9 @@ while true; do
     echo " - $csv_a: $lines_a linhas"
     echo " - $csv_b: $lines_b linhas"
 
-    log_client="$LOG_PATH/${tag}_proto${proto}_client_${timestamp}.log"
     log_server="$LOG_PATH/${tag}_proto${proto}_server_${timestamp}.log"
+    log_client1="$LOG_PATH/${tag}_proto${proto}_client1_${timestamp}.log"
+    log_client2="$LOG_PATH/${tag}_proto${proto}_client2_${timestamp}.log"
     cap_file="$WIRESHARK_PATH/${tag}_proto${proto}_${timestamp}.pcap"
 
     read -p "Interface de rede para captura Wireshark (default: any): " wireshark_interface
@@ -134,9 +135,32 @@ while true; do
     echo ""
     echo -e "${BLUE}A iniciar execução dos binários...${NC}"
 
-    "$BASE_PATH/demo.exe" -r 0 -p "$proto" -f "$file_b" | tee "$log_server" &
+    if [[ "$proto" == "1" ]]; then
+    # Run server (requires a file, even though it doesn't use it)
+    "$BASE_PATH/demo.exe" -r 0 -p 1 -f "$BASE_PATH/README.md" | tee "$log_server" &
     server_pid=$!
     sleep 1
+
+    # Run both clients with -r 1
+    "$BASE_PATH/demo.exe" -r 1 -p 1 -f "$file_a" | tee "$log_client1" &
+    client1_pid=$!
+
+    "$BASE_PATH/demo.exe" -r 1 -p 1 -f "$file_b" | tee "$log_client2" &
+    client2_pid=$!
+
+    echo "A aguardar conclusão..."
+
+    wait $client1_pid
+    wait $client2_pid
+    kill "$server_pid" 2>/dev/null
+    wait "$server_pid" 2>/dev/null
+    else
+    # Default: 1 server, 1 client
+    log_client="$LOG_PATH/${tag}_proto${proto}_client_${timestamp}.log"
+
+    "$BASE_PATH/demo.exe" -r 0 -p "$proto" -f "$file_b" | tee "$log_server" &
+    server_pid=$!
+
     "$BASE_PATH/demo.exe" -r 1 -p "$proto" -f "$file_a" | tee "$log_client" &
     client_pid=$!
 
@@ -144,9 +168,10 @@ while true; do
 
     wait $client_pid
     wait $server_pid
+    fi
 
     echo ""
-    echo -e "${YELLOW}Encerrando captura Wireshark...${NC}"
+    echo -e "${YELLOW}A encerrar captura Wireshark...${NC}"
     kill "$tshark_pid" 2>/dev/null
     wait "$tshark_pid" 2>/dev/null
 
