@@ -138,8 +138,7 @@ while true; do
     if [[ "$proto" == "1" ]]; then
     # Run server (requires a file, even though it doesn't use it)
     "$BASE_PATH/demo.exe" -r 0 -p 1 -f "$BASE_PATH/README.md" | tee "$log_server" &
-    server_pid=$!
-    sleep 1
+    server_pid=$! 
 
     # Run both clients with -r 1
     "$BASE_PATH/demo.exe" -r 1 -p 1 -f "$file_a" | tee "$log_client1" &
