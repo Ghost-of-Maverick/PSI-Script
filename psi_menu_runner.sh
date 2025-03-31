@@ -24,7 +24,7 @@ if [[ "$EUID" -ne 0 ]]; then
   exit 1
 fi
 
-# Criação de diretórios necessários
+# Criação de diretorias necessários
 mkdir -p "$LOG_PATH" "$WIRESHARK_PATH"
 
 # Verifica se tshark está instalado
