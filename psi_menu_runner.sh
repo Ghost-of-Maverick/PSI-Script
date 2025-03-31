@@ -24,7 +24,7 @@ if [[ "$EUID" -ne 0 ]]; then
   exit 1
 fi
 
-# Criação de diretorias necessários
+# Criação de diretorias necessárias
 mkdir -p "$LOG_PATH" "$WIRESHARK_PATH"
 
 # Verifica se tshark está instalado
@@ -136,11 +136,11 @@ while true; do
     echo -e "${BLUE}A iniciar execução dos binários...${NC}"
 
     if [[ "$proto" == "1" ]]; then
-    # Run server (requires a file, even though it doesn't use it)
+    # Correr servidor (requer um ficheiro, mesmo que não seja utilizado)
     "$BASE_PATH/demo.exe" -r 0 -p 1 -f "$BASE_PATH/README.md" | tee "$log_server" &
     server_pid=$! 
 
-    # Run both clients with -r 1
+    # Correr ambos os clientes com -r 1
     "$BASE_PATH/demo.exe" -r 1 -p 1 -f "$file_a" | tee "$log_client1" &
     client1_pid=$!
 
