@@ -26,7 +26,7 @@ Adicionalmente, o script integra a captura de pacotes via Wireshark (utilizando 
 
 ## Requisitos
 
-- **Sistema Operativo:** Linux (testado na distribuição Ubuntu 18.04 com `gnome-terminal`).
+- **Sistema Operativo:** Linux (testado na distribuição Ubuntu 20.04 com `gnome-terminal`).
 - **Permissões:** o script deve ser executado com privilégios de superutilizador (sudo).
 - **Dependências:**
   - `tshark` (necessário para a captura de pacotes via Wireshark)
