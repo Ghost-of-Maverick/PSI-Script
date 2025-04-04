@@ -169,6 +169,7 @@ while true; do
     wait $server_pid
     fi
 
+    sleep 2
     echo ""
     echo -e "${YELLOW}A encerrar captura Wireshark...${NC}"
     kill "$tshark_pid" 2>/dev/null
